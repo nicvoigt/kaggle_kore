@@ -3,8 +3,7 @@ from kaggle_environments import make
 import pandas as pd
 env = make("kore_fleets", debug=True)
 
-
-env.run(["build_ships_and_launch_w_flightplan.py"])
-
+env.run(["RL_Controller/own/rl_main.py", "random"])
+# env.run(["heuristic/noni.py", "random"])
 env.render(mode="ipython", width=1000, height=800)
 
