@@ -11,7 +11,8 @@ from math import floor, log
 from random import randint, random
 #df = pd.read_csv("./rules/spawn_rules.txt", sep="\t")
 from typing import List, Type
-from helper_functions import ReplayBuffer
+# TODO Das als Paket machen, dann läuft es auch im colab und kann auf gpu trainiert werden.
+from kaggle_kore.RL_Controller.own.helper_functions import ReplayBuffer
 
 List[Type[ShipyardAction]]
 
@@ -88,7 +89,7 @@ class Controller:
             self.agent.train()
         
         self.total_train_counter +=1
-        
+
         return rl_state
 
     def choose_action(self, rl_state, obs, config, shipyard_idx):
