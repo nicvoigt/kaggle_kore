@@ -14,7 +14,7 @@ rlc = Controller()
 obs = env.reset(2)
 obs = obs[0]["observation"]
 
-for turn in range(10):
+for turn in range(402):
     board, me, turn, spawn_cost, kore_left, max_spawn = unbundle_stuff(obs, config)
 
     for idx, shipyard in enumerate(me.shipyards):
@@ -22,6 +22,10 @@ for turn in range(10):
 
         # state mappen und auch transition in rl-agent speichern
         rl_state = rlc.make_transition(obs, config)
+        # if env is done
+        # TODO get the other case when, there is only one shipyard left
+        if rl_state[-1] ==1:
+            env.reset(2)
         shipyard.next_action = rlc.choose_action(rl_state, obs, config, shipyard_idx = idx)
 
     if turn==150:
@@ -30,3 +34,5 @@ for turn in range(10):
 
     obs = env.step([me.next_actions, me.next_actions])
     obs = obs[0]["observation"]
+
+print("done")

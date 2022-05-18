@@ -45,6 +45,7 @@ def agent(obs, config):
 
         # state mappen und auch transition in rl-agent speichern
         rl_state = rlc.make_transition(obs, config)
+
         shipyard.next_action = rlc.choose_action(rl_state, obs, config, shipyard_idx = idx)
 
     if turn==150:
