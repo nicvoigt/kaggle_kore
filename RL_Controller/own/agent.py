@@ -35,8 +35,10 @@ def unbundle_stuff(obs, config):
     spawn_cost = board.configuration.spawn_cost
     kore_left = me.kore
     max_spawn = df[df["Turns Controlled"]<=turn]["Spawn Maximum"].values[-1]
+    opp = board.players[1]
+    opp_kore = opp.kore
 
-    return board, me, turn, spawn_cost, kore_left, max_spawn
+    return board, me, turn, spawn_cost, kore_left, max_spawn, opp_kore
 
 
 
@@ -47,10 +49,10 @@ def send_ships_in_random_directions(no_ships_to_send):
 
 class Controller:
     def __init__(self) -> None:
-        
+        self.total_train_counter = 0
         self.rl_state = None
         self.last_rl_state = None
-        self.rl_names = ["turn", "kore_left", "max_spawn", "ships_in_shipyard", "kore_of_fleet", "done"]
+        self.rl_names = ["turn", "kore_left", "kore_opp",  "max_spawn", "ships_in_shipyard", "kore_of_fleet", "done"]
         self.state_size = len(self.rl_names)
         self.last_rl_action = None
         self.agent = Agent(self.state_size, action_size=2, lr=0.005)
@@ -65,12 +67,12 @@ class Controller:
 
     def map_input_to_rl_state(self, obs, config):
         done = False
-        board, me, turn, spawn_cost, kore_left, max_spawn = unbundle_stuff(obs, config)
+        board, me, turn, spawn_cost, kore_left, max_spawn, kore_opp = unbundle_stuff(obs, config)
         if turn == 399:
             done = True
         ships_in_shipyard = me.shipyards[0].ship_count
         kore_of_fleet = sum([fleet.kore for fleet in me.fleets])
-        rl_state = [turn, kore_left, max_spawn, ships_in_shipyard, kore_of_fleet, done]
+        rl_state = [turn, kore_left, kore_opp, max_spawn, ships_in_shipyard, kore_of_fleet, done]
         return rl_state
 
     def make_transition(self, obs, config):
@@ -81,6 +83,11 @@ class Controller:
         if self.last_rl_action != None:
             self.store_transition(self.last_rl_state, self.last_rl_action, reward, rl_state, done=rl_state[-1])
         self.rl_state = rl_state
+
+        if self.total_train_counter % 50 == 0:
+            self.agent.train()
+        
+        self.total_train_counter +=1
         
         return rl_state
 
@@ -108,11 +115,19 @@ class Controller:
              reward +=15
              # TODO: hier das gegainte implementieren
 
+        if self.rl_state[self.rl_names.index("done")] == 1:
+            print("Game is over.")
+            if self.rl_state[self.rl_names.index("kore_left")]>\
+                self.rl_state[self.rl_names.index("kore_opp")]:
+                reward +=100000
+            elif self.rl_state[self.rl_names.index("kore_left")]>\
+                self.rl_state[self.rl_names.index("kore_opp")]:
+                reward -=100000
         return reward
         
 
     def map_action(self, action_raw, obs, config, shipyard_idx):
-        board, me, turn, spawn_cost, kore_left, max_spawn = unbundle_stuff(obs, config)
+        board, me, turn, spawn_cost, kore_left, max_spawn, kore_opp = unbundle_stuff(obs, config)
         if action_raw == 0:
             direction = Direction.random_direction()
             test = me.shipyards[shipyard_idx].ship_count
@@ -152,6 +167,7 @@ class Agent:
         state_input = np.reshape(state_input, newshape=(1, len(state_input)))
         raw_action = self.model.predict(state_input)
         return raw_action
+
     def train(self):
         if self.memory.mem_cntr <= self.batch_size:
             return
