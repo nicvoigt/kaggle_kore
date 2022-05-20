@@ -5,16 +5,11 @@ backports.entry-points-selectable==1.1.0
 beautifulsoup4==4.10.0
 bleach==4.1.0
 Brotli==1.0.9
-bs4==0.0.1
 certifi==2021.10.8
 cffi==1.14.6
 charset-normalizer==2.0.11
 click==8.0.4
 colorama==0.4.4
-dash==2.0.0
-dash-bootstrap-components==1.0.2
-dash-core-components==2.0.0
-dash-html-components==2.0.0
 dash-table==5.0.0
 debugpy==1.4.3
 decorator==5.1.0
@@ -22,17 +17,10 @@ defusedxml==0.7.1
 distlib==0.3.2
 entrypoints==0.3
 filelock==3.0.12
-Flask==2.0.3
-Flask-Compress==1.11
-Flask-Login==0.5.0
-Flask-SQLAlchemy==2.5.1
 future==0.18.2
 geocoder==1.38.1
 geographiclib==1.52
-geopy==2.2.0
-googlemaps==4.6.0
 greenlet==1.1.2
-gunicorn==20.1.0
 idna==3.3
 ipykernel==6.4.1
 ipython==7.28.0
@@ -52,10 +40,8 @@ jupyterlab-widgets==1.0.2
 MarkupSafe==2.1.0
 matplotlib-inline==0.1.3
 # Editable install with no version control (MB-APP==0.1)
--e c:\users\nicoj\python_projects\mitbring_app
 mistune==0.8.4
 MouseInfo==0.1.3
-mysql-connector-python==8.0.28
 nbclient==0.5.4
 nbconvert==6.2.0
 nbformat==5.1.3
@@ -74,7 +60,6 @@ plotly==5.6.0
 prometheus-client==0.11.0
 prompt-toolkit==3.0.20
 protobuf==3.19.4
-PyAutoGUI==0.9.53
 pycparser==2.20
 PyGetWindow==0.0.9
 Pygments==2.10.0
@@ -98,19 +83,16 @@ requests==2.27.1
 Send2Trash==1.8.0
 six==1.16.0
 soupsieve==2.3.1
-SQLAlchemy==1.4.32
 tenacity==8.0.1
 terminado==0.12.1
 testpath==0.5.0
 tornado==6.1
 traitlets==5.1.0
-urllib3==1.26.8
 virtualenv==20.7.2
 wcwidth==0.2.5
 webencodings==0.5.1
 Werkzeug==2.0.3
 widgetsnbextension==3.5.1
-wikipedia==1.4.0
 tensorflow==2.3.0
 keras==2.4.3
 gym==0.21.0
