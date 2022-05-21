@@ -1,0 +1,11 @@
+Turns Controlled	Spawn Maximum
+0	1
+2	2
+7	3
+17	4
+34	5
+60	6
+97	7
+147	8
+212	9
+294	10

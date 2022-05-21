@@ -3,7 +3,7 @@ from distutils.core import setup
 setup(
     name='kaggle_kore',
     version='0.0',
-    packages=[''],
+    packages=['kaggle_kore'],
     url='',
     license='',
     author='nico voigt',

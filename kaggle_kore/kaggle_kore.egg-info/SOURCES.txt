@@ -1,6 +1,6 @@
 README.md
+exploring.py
 setup.py
-kaggle_kore/exploring.py
 kaggle_kore.egg-info/PKG-INFO
 kaggle_kore.egg-info/SOURCES.txt
 kaggle_kore.egg-info/dependency_links.txt
