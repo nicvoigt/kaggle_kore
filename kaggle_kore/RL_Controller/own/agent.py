@@ -137,9 +137,11 @@ class Controller:
             print("Game is over.")
             if self.rl_state[self.rl_names.index("kore_left")]>\
                 self.rl_state[self.rl_names.index("kore_opp")]:
+                print("Game is won")
                 reward +=100000
             elif self.rl_state[self.rl_names.index("kore_left")]<\
                 self.rl_state[self.rl_names.index("kore_opp")]:
+                print("Game is lost")
                 reward -=100000
 
 
