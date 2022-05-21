@@ -74,8 +74,8 @@ def create_flightplan_to_opponent_bases(own_pos, opp_poss):
     ox = opp_poss[0]
     oy = opp_poss[1]
     
-    dx = int(((x-ox)**2)**(1/2))    # kann durch ost/west gesteuet weren
-    dy = int((y-oy)**2)**(1/2)   # kann durch nord/süd gesteuert werden
+    dx = int(((x-ox)**2)**(1/2)-1)    # kann durch ost/west gesteuet weren
+    dy = int(((y-oy)**2)**(1/2)-1)   # kann durch nord/süd gesteuert werden
 
     dirx = choice(["W", "E"])
     diry = choice(["N", "S"])
