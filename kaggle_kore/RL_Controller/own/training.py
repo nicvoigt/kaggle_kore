@@ -17,7 +17,7 @@ rlc = Controller()
 obs = env.reset(2)
 obs = obs[0]["observation"]
 
-for turn in range(402):
+for turn in range(50):
     board, me, turn, spawn_cost, kore_left, max_spawn, kore_opp, opp_shipyards, num_shipyards = unbundle_stuff(obs, config)
 
     for idx, shipyard in enumerate(me.shipyards):

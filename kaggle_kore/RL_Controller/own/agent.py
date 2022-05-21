@@ -77,8 +77,8 @@ def create_flightplan_to_opponent_bases(own_pos, opp_poss):
     dx = x-ox   # kann durch ost/west gesteuet weren
     dy = y-oy   # kann durch nord/süd gesteuert werden
 
-    dirx = choice("W", "E")
-    diry = choice("N", "S")
+    dirx = choice(["W", "E"])
+    diry = choice(["N", "S"])
     fp = f"{dirx}{dx}{diry}"
     return ShipyardAction.launch_fleet_with_flight_plan(50,fp)
 
@@ -143,7 +143,7 @@ class Controller:
     def choose_action(self, rl_state, obs, config, shipyard_idx):
         action_raw = self.agent.choose_action(state_input = rl_state)
         action_raw = np.argmax(action_raw)
-        action_raw = randint(0,2)
+        action_raw = randint(0,3)
         action = self.map_action(action_raw,  obs, config, shipyard_idx)
         
         self.last_rl_action = action_raw
