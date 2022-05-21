@@ -1,4 +1,3 @@
-import random
 import numpy as np
 from tensorflow import keras
 from tensorflow.keras import models, layers
@@ -8,7 +7,7 @@ from kaggle_environments.envs.kore_fleets.helpers import ShipyardAction,  Config
 from numpy import outer
 import pandas as pd
 from math import floor, log
-from random import randint, random
+from random import randint, random, choice
 #df = pd.read_csv("./rules/spawn_rules.txt", sep="\t")
 from typing import List, Type
 # TODO Das als Paket machen, dann läuft es auch im colab und kann auf gpu trainiert werden.
@@ -58,6 +57,40 @@ def send_ships_to_create_new_base(shipyard):
     fp = dir1s
     return ShipyardAction.launch_fleet_with_flight_plan(50,fp)
 
+def find_opponent_bases(board) -> list:
+    return [board.players[1].shipyards[idx].position for idx in range(len(board.players[1].shipyards))]
+
+def get_own_position(board, idx) -> list:
+    return board.players[0].shipyards[idx].position 
+
+
+
+def create_flightplan_to_opponent_bases(own_pos, opp_poss):
+    a = 0
+    x = own_pos[0]
+    y = own_pos[1]
+    # first only attack the first opponent base:
+    opp_poss = opp_poss[0]
+    ox = opp_poss[0]
+    oy = opp_poss[1]
+    
+    dx = x-ox   # kann durch ost/west gesteuet weren
+    dy = y-oy   # kann durch nord/süd gesteuert werden
+
+    dirx = choice("W", "E")
+    diry = choice("N", "S")
+    fp = f"{dirx}{dx}{diry}"
+    return ShipyardAction.launch_fleet_with_flight_plan(50,fp)
+
+
+def attack_opponent_base(board, idx):
+    # first check where the base is:
+    opponent_positions = find_opponent_bases(board)
+    own_position = get_own_position(board, idx)
+    return create_flightplan_to_opponent_bases(own_pos=own_position, opp_poss=opponent_positions)
+    
+
+
 class Controller:
     def __init__(self) -> None:
         self.total_train_counter = 0
@@ -66,7 +99,7 @@ class Controller:
         self.rl_names = ["turn", "kore_left", "kore_opp",  "max_spawn", "ships_in_shipyard", "kore_of_fleet", "num_shipyards" , "done"]
         self.state_size = len(self.rl_names)
         self.last_rl_action = None
-        self.agent = Agent(self.state_size, action_size=3, lr=0.005)
+        self.agent = Agent(self.state_size, action_size=4, lr=0.005)
 
     def get_states(self, obs, config):
         self.obs = obs
@@ -79,7 +112,7 @@ class Controller:
     def map_input_to_rl_state(self, obs, config):
         done = 0
         board, me, turn, spawn_cost, kore_left, max_spawn, kore_opp, opp_shipyards, num_shipyards = unbundle_stuff(obs, config)
-        if (turn == 399) or (opp_shipyards==0):
+        if (turn == 10) or (opp_shipyards==0):
             done = 1
         ships_in_shipyard = me.shipyards[0].ship_count
         kore_of_fleet = sum([fleet.kore for fleet in me.fleets])
@@ -94,9 +127,13 @@ class Controller:
         
         if self.last_rl_action != None:
             self.store_transition(self.last_rl_state, self.last_rl_action, reward, rl_state, done=rl_state[-1])
+        
+        # noch schauen, dass kein zusammenhang zwischen den states besteht beim resetten 
+        if rl_state[-1] == 1:
+            pass
         self.rl_state = rl_state
 
-        if self.total_train_counter % 100 == 0:
+        if self.total_train_counter % 1000 == 0:
             self.agent.train()
         
         self.total_train_counter +=1
@@ -163,6 +200,8 @@ class Controller:
         elif action_raw == 2:
             action = send_ships_to_create_new_base(shipyard=me.shipyards[shipyard_idx])
 
+        elif action_raw == 3:
+            action = attack_opponent_base(board, idx=shipyard_idx)
 
         return action
 
@@ -182,13 +221,6 @@ class Agent:
         self.gamma = gamma
         self.lr = lr
         
-
-    def create_model(self, action_size, lr):
-        inputs = layers.Input(shape=())
-        layer1 = layers.Dense(4, activation="relu")(inputs)
-        outputs = layers.Dense(action_size, activation="linear")(layer1)
-        return keras.Model(inputs=inputs, outputs=outputs)
-
     def choose_action(self, state_input):
         state_input = np.array(state_input)
         state_input = np.reshape(state_input, newshape=(1, len(state_input)))
@@ -219,8 +251,8 @@ class Agent:
     def create_model2(self, action_size, lr):
         model = models.Sequential()
         model.add(layers.Dense(self.state_size))
-        model.add(layers.Dense(4))
-        model.add(layers.Dense(2, activation='relu'))
-        model.add(layers.Dense(3))
+        model.add(layers.Dense(16))
+        model.add(layers.Dense(8, activation='relu'))
+        model.add(layers.Dense(action_size))
         model.compile(optimizer=Adam(lr=lr), loss='mean_squared_error')
         return model

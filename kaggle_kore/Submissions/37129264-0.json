@@ -1,0 +1,11 @@
+[[{"duration": 18.546759, "stdout": "", "stderr": "/opt/conda/lib/python3.7/site-packages/keras/optimizer_v2/optimizer_v2.py:356: UserWarning: The `lr` argument is deprecated, use `learning_rate` instead.\n  \"The `lr` argument is deprecated, use `learning_rate` instead.\")\n"}],
+ [{"duration": 0.388658, "stdout": "", "stderr": ""}],
+ [{"duration": 0.356104, "stdout": "", "stderr": ""}],
+ [{"duration": 0.353247, "stdout": "", "stderr": ""}],
+ [{"duration": 0.267034, "stdout": "", "stderr": ""}],
+ [{"duration": 0.273941, "stdout": "", "stderr": ""}],
+ [{"duration": 0.30852, "stdout": "", "stderr": ""}],
+ [{"duration": 0.289576, "stdout": "", "stderr": ""}],
+ [{"duration": 0.274284, "stdout": "", "stderr": ""}],
+ [{"duration": 0.289247, "stdout": "", "stderr": ""}],
+ [{"duration": 0.033777, "stdout": "", "stderr": "Traceback (most recent call last):\n  File \"/opt/conda/lib/python3.7/site-packages/kaggle_environments/agent.py\", line 159, in act\n    action = self.agent(*args)\n  File \"/opt/conda/lib/python3.7/site-packages/kaggle_environments/agent.py\", line 131, in callable_agent\n    if callable(agent) \\\n  File \"/kaggle_simulations/agent/main.py\", line 284, in sumbission\n    env.reset(2)\nNameError: name 'env' is not defined\n"}]]
