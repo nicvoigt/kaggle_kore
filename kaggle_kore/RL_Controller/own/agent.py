@@ -96,7 +96,7 @@ class Controller:
         self.total_train_counter = 0
         self.rl_state = None
         self.last_rl_state = None
-        self.rl_names = ["turn", "kore_left", "kore_opp",  "max_spawn", "ships_in_shipyard", "kore_of_fleet", "num_shipyards" , "done"]
+        self.rl_names = ["turn", "kore_left", "kore_opp",  "max_spawn", "ships_in_shipyard", "kore_of_fleet", "num_shipyards" ,"n_opp_shipyards" ,"done"]
         self.state_size = len(self.rl_names)
         self.last_rl_action = None
         self.agent = Agent(self.state_size, action_size=4, lr=0.005)
@@ -117,7 +117,7 @@ class Controller:
         ships_in_shipyard = me.shipyards[0].ship_count
         kore_of_fleet = sum([fleet.kore for fleet in me.fleets])
         rl_state = [turn, kore_left, kore_opp, max_spawn, ships_in_shipyard, 
-                    kore_of_fleet, num_shipyards,  done]
+                    kore_of_fleet, num_shipyards, opp_shipyards, done]
         return rl_state
 
     def make_transition(self, obs, config):
@@ -172,6 +172,8 @@ class Controller:
         # reward if game ends:
         if self.rl_state[self.rl_names.index("done")] == 1:
             print("Game is over.")
+            if self.rl_state[self.rl_names.index("n_opp_shipyards")] ==0 and self.rl_state[self.rl_names.index("num_shipyards")] >0:
+                return float(reward + 100000)
             if self.rl_state[self.rl_names.index("kore_left")]> self.rl_state[self.rl_names.index("kore_opp")]:
                 reward +=100000
                 print(f"reward ist: {reward}")
