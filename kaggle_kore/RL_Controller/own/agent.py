@@ -138,7 +138,7 @@ class Controller:
             if self.rl_state[self.rl_names.index("kore_left")]>\
                 self.rl_state[self.rl_names.index("kore_opp")]:
                 reward +=100000
-            elif self.rl_state[self.rl_names.index("kore_left")]>\
+            elif self.rl_state[self.rl_names.index("kore_left")]<\
                 self.rl_state[self.rl_names.index("kore_opp")]:
                 reward -=100000
 
