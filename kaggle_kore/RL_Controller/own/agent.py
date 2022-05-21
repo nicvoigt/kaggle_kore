@@ -112,7 +112,7 @@ class Controller:
     def map_input_to_rl_state(self, obs, config):
         done = 0
         board, me, turn, spawn_cost, kore_left, max_spawn, kore_opp, opp_shipyards, num_shipyards = unbundle_stuff(obs, config)
-        if (turn == 10) or (opp_shipyards==0):
+        if (turn == 399) or (opp_shipyards==0):
             done = 1
         ships_in_shipyard = me.shipyards[0].ship_count
         kore_of_fleet = sum([fleet.kore for fleet in me.fleets])
