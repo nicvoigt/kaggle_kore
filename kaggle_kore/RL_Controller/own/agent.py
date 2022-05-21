@@ -202,7 +202,9 @@ class Controller:
 
         elif action_raw == 3:
             action = attack_opponent_base(board, idx=shipyard_idx)
-
+            print("theoretically attacked opponent base")
+            if me.shipyards[0].ship_count >=50:
+                print("vermutlich auch angegriffen")
         return action
 
     def save_models(self):
