@@ -38,9 +38,10 @@ def unbundle_stuff(obs, config):
     max_spawn = df[df["Turns Controlled"]<=turn]["Spawn Maximum"].values[-1]
     opp = board.players[1]
     opp_kore = opp.kore
+    opp_shipyards = len(opp.shipyards)
     num_shipyards = len(me.shipyards)
 
-    return board, me, turn, spawn_cost, kore_left, max_spawn, opp_kore, num_shipyards
+    return board, me, turn, spawn_cost, kore_left, max_spawn, opp_kore, opp_shipyards,  num_shipyards
 
 
 
@@ -77,9 +78,9 @@ class Controller:
 
     def map_input_to_rl_state(self, obs, config):
         done = False
-        board, me, turn, spawn_cost, kore_left, max_spawn, kore_opp, num_shipyards = unbundle_stuff(obs, config)
-        if turn == 399:
-            done = True
+        board, me, turn, spawn_cost, kore_left, max_spawn, kore_opp, opp_shipyards, num_shipyards = unbundle_stuff(obs, config)
+        if (turn == 399) or (opp_shipyards==0):
+            done = 1
         ships_in_shipyard = me.shipyards[0].ship_count
         kore_of_fleet = sum([fleet.kore for fleet in me.fleets])
         rl_state = [turn, kore_left, kore_opp, max_spawn, ships_in_shipyard, 
@@ -146,7 +147,7 @@ class Controller:
         
 
     def map_action(self, action_raw, obs, config, shipyard_idx):
-        board, me, turn, spawn_cost, kore_left, max_spawn, kore_opp, num_shipyards = unbundle_stuff(obs, config)
+        board, me, turn, spawn_cost, kore_left, max_spawn, kore_opp, opp_shipyards, num_shipyards = unbundle_stuff(obs, config)
         
         # send ships to random direction
         if action_raw == 0:
