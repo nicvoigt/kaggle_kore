@@ -70,7 +70,7 @@ def create_flightplan_to_opponent_bases(own_pos, opp_poss):
     x = own_pos[0]
     y = own_pos[1]
     # first only attack the first opponent base:
-    opp_poss = opp_poss[0]
+    opp_poss = opp_poss[-1]
     ox = opp_poss[0]
     oy = opp_poss[1]
     
