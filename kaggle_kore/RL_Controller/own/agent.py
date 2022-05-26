@@ -91,7 +91,7 @@ def attack_opponent_base(board, idx):
     
 
 
-class Controller:
+class Multi_Agent_Controller:
     def __init__(self) -> None:
         self.total_train_counter = 0
         self.rl_state = dict()
