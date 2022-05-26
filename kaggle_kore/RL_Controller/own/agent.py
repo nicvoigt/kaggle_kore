@@ -109,7 +109,7 @@ class Controller:
         board, me, turn, spawn_cost, kore_left, max_spawn, kore_opp, opp_shipyards, num_shipyards = unbundle_stuff(obs, config)
         
         new_shipyards = num_shipyards - self.num_shipyards
-        if (turn >0) and (new_shipyards > 0) and (idx >=idx):
+        if (turn >0) and (new_shipyards > 0) and (idx >= idx):
             for sy in range(new_shipyards):
                 self.create_new_agent(idx)
         self.obs[idx] = obs
@@ -128,7 +128,7 @@ class Controller:
         # also abfragen, ob schon die neue base angesprochen wird
         next_idx = len(self.agents) - idx
         self.agents.append(Agent(self.state_size, action_size=4, lr=0.005))
-        self.rl_state[idx +1] = self.rl_state[idx]
+        self.rl_state[next_idx] = self.rl_state[idx]
 
     def store_transition(self, state, action, reward, next_state, done, idx):
         self.agents[idx].store_transition(state, action, reward, next_state, done)
