@@ -2,11 +2,9 @@ import numpy as np
 from own_env import CustomKoreEnv, build_env, Agent
 
 
-
 def main():
     env = build_env()
     model = Agent().build_model(model_parameter="Platzhalter")
-
 
     observation = env.reset()
     sum_reward = 0
@@ -21,6 +19,7 @@ def main():
         sum_reward += reward
         c += 1
     a = 0
+
 
 if __name__ == "__main__":
     main()

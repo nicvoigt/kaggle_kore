@@ -15,6 +15,7 @@ import pygad
 import pygad.kerasga
 from tensorflow.keras import models, layers
 
+
 class CustomKoreEnv(Env):
     """
     This is a custom Kore environment, adapted for use with
@@ -69,9 +70,12 @@ class CustomKoreEnv(Env):
         #   - [1, 1] -> Same as [1, 0], but only half of the
         #     ships will be used to launch the fleet.
         #
-        self.action_space = spaces.Box(low=0, high=1, shape=(2,), dtype=np.float64)
+        self.action_space = spaces.Box(
+            low=0, high=1, shape=(
+                2,), dtype=np.float64)
 
-    def map_value(self, value: Union[int, float], enemy: bool = False) -> float:
+    def map_value(self, value: Union[int, float],
+                  enemy: bool = False) -> float:
         """
         Helper function for build_observation. For this to work, we must
         assume the following:
@@ -101,19 +105,19 @@ class CustomKoreEnv(Env):
         """
         Our observation space will be a matrix of size
         (map_size, map_size, 4).
-        
+
         - The first layer is the kore count, which has
             its values mapped to [0, 1]
-        
+
         - The second layer is the fleet size, which has
             its values mapped to [-1, 1] (negative values
             are used to represent enemy fleets)
-        
+
         - The third layer represents possible places that
             the enemy fleets can be at the next turn. All
             values are either -1 (enemy can be there) or
             0 (enemy can't be there).
-        
+
         - The fourth layer represents the amount of kore
             that each fleet is carrying.
         """
@@ -251,7 +255,8 @@ class CustomKoreEnv(Env):
             )
         # - Check if the action space is [1, 1]
         elif action_space[0] == 1 and action_space[1] == 1:
-            ships_in_fleet = int(self.board.current_player.shipyards[0].ship_count / 2)
+            ships_in_fleet = int(
+                self.board.current_player.shipyards[0].ship_count / 2)
             if ships_in_fleet == 0 and self.board.current_player.shipyards[0].ship_count > 0:
                 ships_in_fleet = 1
             else:
@@ -290,8 +295,10 @@ class CustomKoreEnv(Env):
         reward = self.map_reward(old_reward, observation)
         return observation, reward, done, info
 
+
 def build_env():
     return CustomKoreEnv()
+
 
 def build_model():
     return models.Sequential(
@@ -308,6 +315,7 @@ def build_model():
             layers.Activation("sigmoid")
         ]
     )
+
 
 def fitness_func(solution, sol_idx):
     env = build_env()
@@ -331,9 +339,11 @@ def fitness_func(solution, sol_idx):
 
     return sum_reward
 
+
 def callback_generation(ga_instance):
     print(f"Generation: {ga_instance.generations_completed}")
     print(f"Best fitness: {ga_instance.best_solution()[1]}")
+
 
 keras_ga = pygad.kerasga.KerasGA(model=build_model(), num_solutions=10)
 
@@ -344,7 +354,9 @@ num_parents_mating = (
 initial_population = (
     keras_ga.population_weights
 )  # Initial population refers to the initial network weights
-mutation_percent_genes = 10  # Percentage of genes to mutate. This parameter has no action if the parameter mutation_num_genes exists.
+# Percentage of genes to mutate. This parameter has no action if the
+# parameter mutation_num_genes exists.
+mutation_percent_genes = 10
 
 ga_instance = pygad.GA(
     num_generations=num_generations,
