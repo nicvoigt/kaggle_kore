@@ -21,3 +21,4 @@ jobs:
           git config --global user.email 'nico.jsgww@gmx.net'
           git commit -am "Automated autopep8 fixes"
           git push
+          
