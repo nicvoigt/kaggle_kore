@@ -107,6 +107,7 @@ class Multi_Agent_Controller:
     def calc_reward(self, idx):
         # Wenn keine Aktion durchgeführt wurde, weil zb nicht genügend schiffe vorhanden waren, gibt es einen negativen reward.
         # dadurch zb eher schiffe gebaut, als eine nicht mögliche aktion durchgeführt
+        # -> Welche Faktoren sind hier gleich, und welche sind anders?
 
         reward = 0
         if len(self.last_rl_state) == 0:        # wenn das noch nicht gefüllt wurde
