@@ -33,9 +33,12 @@ class CustomKoreEnv(Env):
             low=-1, high=1, shape=(map_size, map_size, 4), dtype=np.float64
         )
         # action_space für jeden agenten
-        self.action_space = spaces.Box(low=0, high=1, shape=(2,), dtype=np.float64)
+        self.action_space = spaces.Box(
+            low=0, high=1, shape=(
+                2,), dtype=np.float64)
 
-    def map_value(self, value: Union[int, float], enemy: bool = False) -> float:
+    def map_value(self, value: Union[int, float],
+                  enemy: bool = False) -> float:
         MAX_NATURAL_KORE_IN_SQUARE = 500
         MAX_ASSUMED_FLEET_SIZE = 1000
         MAX_ASSUMED_KORE_IN_FLEET = 5000
@@ -58,38 +61,41 @@ class CustomKoreEnv(Env):
         val_ship = 30
         val_kore = 10
         val_base = 500
-        
+
         # anzahl neuer Schiffe
-        r4_new_ships = len(self.board.current_player.fleets) - self.ships_last_step 
+        r4_new_ships = len(
+            self.board.current_player.fleets) - self.ships_last_step
         self.ships_last_step = len(self.board.current_player.fleets)
 
         # menge kore
-        r4_more_kore = self.board.current_player.kore - self.kore_last_step 
-        self.kore_last_step  = self.board.current_player.kore
+        r4_more_kore = self.board.current_player.kore - self.kore_last_step
+        self.kore_last_step = self.board.current_player.kore
 
         # anzahl neuer bases
-        r4_more_bases = len(self.board.current_player.shipyard_ids) - self.bases_last_step
+        r4_more_bases = len(
+            self.board.current_player.shipyard_ids) - self.bases_last_step
         self.bases_last_step = len(self.board.current_player.shipyard_ids)
 
-        return  val_ship*r4_new_ships + val_kore*r4_more_kore + val_base*r4_more_bases
+        return val_ship * r4_new_ships + val_kore * \
+            r4_more_kore + val_base * r4_more_bases
 
     def build_observation(self, raw_observation: Observation) -> np.ndarray:
         """
         Our observation space will be a matrix of size
         (map_size, map_size, 4).
-        
+
         - The first layer is the kore count, which has
             its values mapped to [0, 1]
-        
+
         - The second layer is the fleet size, which has
             its values mapped to [-1, 1] (negative values
             are used to represent enemy fleets)
-        
+
         - The third layer represents possible places that
             the enemy fleets can be at the next turn. All
             values are either -1 (enemy can be there) or
             0 (enemy can't be there).
-        
+
         - The fourth layer represents the amount of kore
             that each fleet is carrying.
         """
@@ -110,7 +116,6 @@ class CustomKoreEnv(Env):
         shipyards = [shipyard for _, shipyard in board.shipyards.items()]
 
         # aktuelle shipyard auf den layer bringen
-        
 
         for fleet in fleets:
             # - Get the position of the fleet
@@ -181,7 +186,10 @@ class CustomKoreEnv(Env):
 
         return observation
 
-    def match_action(self, action_space: np.ndarray, idx: int) -> ShipyardAction:
+    def match_action(
+            self,
+            action_space: np.ndarray,
+            idx: int) -> ShipyardAction:
         """
         This function will match the action space to a
         ShipyardAction.
@@ -208,7 +216,8 @@ class CustomKoreEnv(Env):
         # - Check if the action space is [1, 1]
         # eine base bauen
         elif action_space[0] == 1 and action_space[1] == 1:
-            ships_in_fleet = int(self.board.current_player.shipyards[idx].ship_count)
+            ships_in_fleet = int(
+                self.board.current_player.shipyards[idx].ship_count)
             if ships_in_fleet > 55:
                 choice(["N", "E", "S", "W"])
 
@@ -242,24 +251,27 @@ class CustomKoreEnv(Env):
             action = self.match_action(action_space, idx)
             self.board.current_player.shipyards[idx].next_action = action
         self.raw_observation, old_reward, done, info = self.env.step(
-        self.board.current_player.next_actions
+            self.board.current_player.next_actions
         )
         observation = self.build_observation(self.raw_observation)
         reward = self.map_reward(observation)
         self.save_observations(observation)
-        
+
         return observation, reward, done, info
 
     def save_observations(self, observation):
         self.old_observation = observation
         self.old_raw_observation = self.raw_observation
 
+
 def build_env():
     return CustomKoreEnv()
 
+
 def build_model():
     # TODO ggf. Model so anpassen, dass nachher auch noch ein layer mit nur (x,1)-shape eingefügt wird.
-    # hier sollen die generellen statistiken rein: anzahl kore, anzahl schiffe, etc
+    # hier sollen die generellen statistiken rein: anzahl kore, anzahl
+    # schiffe, etc
     return models.Sequential(
         [
             layers.Input(shape=(21, 21, 4)),
@@ -275,14 +287,16 @@ def build_model():
         ]
     )
 
+
 class Agent:
     def __init__(self) -> None:
         self.model = None
 
     def build_model(self, model_parameter):
         # TODO ggf. Model so anpassen, dass nachher auch noch ein layer mit nur (x,1)-shape eingefügt wird.
-        # hier sollen die generellen statistiken rein: anzahl kore, anzahl schiffe, etc
-        return  models.Sequential(
+        # hier sollen die generellen statistiken rein: anzahl kore, anzahl
+        # schiffe, etc
+        return models.Sequential(
             [
                 layers.Input(shape=(21, 21, 4)),
                 layers.Conv2D(64, 8),
@@ -296,4 +310,3 @@ class Agent:
                 layers.Activation("sigmoid")
             ]
         )
-
