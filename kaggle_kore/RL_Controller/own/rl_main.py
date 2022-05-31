@@ -29,7 +29,8 @@ def agent(obs, config):
         # if env is done
         # TODO get the other case when, there is only one shipyard left
         if rl_state[-1] == 1:
-            env.reset(2)
+            break
+            # env.reset(2)
         shipyard.next_action = rlc.choose_action(rl_state, obs, config, idx)
 
     return me.next_actions

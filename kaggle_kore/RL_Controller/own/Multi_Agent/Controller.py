@@ -93,9 +93,7 @@ class Multi_Agent_Controller:
         rl_state = self.map_input_to_rl_state(obs, config, idx)
 
         if len(
-            self.last_rl_action) != 0 and len(
-            self.last_rl_state) != len(
-                self.rl_state):
+            self.last_rl_action) != 0 and len(self.last_rl_state) == len(self.rl_state):
             self.store_transition(self.last_rl_state[idx],
                                   self.last_rl_action[idx],
                                   reward,
