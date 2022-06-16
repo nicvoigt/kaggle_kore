@@ -9,7 +9,7 @@ from kaggle_environments import make
 import pandas as pd
 from helper_functions import unbundle_stuff
 import time
-from kaggle_kore.RL_Controller.own.Multi_Agent.Controller import Multi_Agent_Controller 
+from kaggle_kore.RL_Controller.own.Multi_Agent.Controller import Multi_Agent_Controller
 #from kaggle_kore.RL_Controller.own.Single_Agent.Controller import Controller
 start = time.time()
 env = make("kore_fleets", debug=True)
