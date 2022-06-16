@@ -72,12 +72,6 @@ class Multi_Agent_Controller:
         print("new base built")
         # TODO  Am besten hier später eine Kopie einfügen, die pretrained
         # ist.Oder den gleichen noch einmal reinkopieren
-
-        # es gibt schon eine neue base, aber zuerst werden die anderen gesteuert
-        # also abfragen, ob schon die neue base angesprochen wird
-
-        # TODO hier ist der fehler!!!!!!!
-
         self.agents.append(Agent(self.state_size, action_size=4, lr=0.005))
 
         # tryout beim höchsten rl_state noch einen hinzufügen
@@ -235,10 +229,14 @@ class Multi_Agent_Controller:
             action = ShipyardAction.spawn_ships(max_spawn)
         return action
 
+    def save_replay_memory(self):
+        for agent in self.agents:
+            agent.save_replay_memory()
+
     def save_models(self):
         # TODO hier nochmal genau reinschauen, ist njoch nciht richtig
         # implementiert
         for agent in self.agents:
-            agent.model.save(self.q_eval_model_file)
-            agent.target_model.save(self.q_target_model_file)
+            agent.model.save("model.h5")
+            agent.target_model.save("target_model.h5")
             print('... saving models ...')

@@ -67,3 +67,6 @@ class Agent:
         model.add(layers.Dense(action_size))
         model.compile(optimizer=Adam(lr=lr), loss='mean_squared_error')
         return model
+
+    def save_replay_memory(self):
+        self.memory.save_to_local()
