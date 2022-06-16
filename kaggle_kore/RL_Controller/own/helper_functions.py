@@ -1,4 +1,5 @@
 import numpy as np
+from tempfile import TemporaryFile
 from tensorflow import keras
 from tensorflow.keras import models, layers
 from tensorflow.keras.optimizers import Adam
@@ -56,6 +57,10 @@ class ReplayBuffer(object):
         terminal = self.terminal_memory[indexes[0]: indexes[1]]
 
         return states, actions, rewards, states_, terminal
+
+    def save_to_local(self):
+        outfile = TemporaryFile()
+        np.savez("testoutput.npz", self.state_memory, self.new_state_memory, self.action_memory, self.reward_memory, self.terminal_memory )
 
 
 tc = [0, 2, 7, 17, 34, 60, 97, 147, 212, 294]

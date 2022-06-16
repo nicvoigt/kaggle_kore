@@ -18,7 +18,7 @@ rlc = Controller()
 obs = env.reset(2)
 obs = obs[0]["observation"]
 
-for turn in range(1000):
+for turn in range(10):
     board, me, turn, spawn_cost, kore_left, max_spawn, kore_opp, opp_shipyards, num_shipyards = unbundle_stuff(
         obs, config)
 
@@ -41,3 +41,5 @@ for turn in range(1000):
 end = time.time()
 print(f"done. Dauer ist: {end-start}.")
 print(rlc.agents[0].memory.sample_by_index((0, 50)))
+rlc.save_models()
+rlc.save_replay_memory()
