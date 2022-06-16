@@ -1,3 +1,4 @@
+import os
 import numpy as np
 from tensorflow import keras
 from tensorflow.keras import models, layers
@@ -15,6 +16,7 @@ from typing import List, Type
 from kaggle_kore.RL_Controller.own.helper_functions import ReplayBuffer
 from kaggle_kore.RL_Controller.own import helper_functions
 from kaggle_kore.RL_Controller.own.Agent.agent import Agent
+from kaggle_kore.utils.paths import result_dir
 
 
 class Multi_Agent_Controller:
@@ -135,13 +137,16 @@ class Multi_Agent_Controller:
             pass
         self.rl_state[idx] = rl_state
 
-        if self.total_train_counter % 1000 == 0:
-            for agent in self.agents:
-                agent.train()
+        if self.total_train_counter % 100 == 0:
+            self.train_agents()
 
         self.total_train_counter += 1
 
         return rl_state
+
+    def train_agents(self):
+        for agent in self.agents:
+            agent.train()
 
     def choose_action(self, rl_state, idx):
 
@@ -238,7 +243,16 @@ class Multi_Agent_Controller:
     def save_models(self):
         # TODO hier nochmal genau reinschauen, ist njoch nciht richtig
         # implementiert
-        for agent in self.agents:
-            agent.model.save(self.q_eval_model_file)
-            agent.target_model.save(self.q_target_model_file)
+        for no_agent, agent in enumerate(self.agents):
+            agent.model.save(os.path.join(result_dir, f"agent_no{no_agent}.h5"))
+            agent.target_model.save(os.path.join(result_dir, f"agent_no{no_agent}_target.h5"))
             print('... saving models ...')
+
+
+    def save_replay_memory(self):
+        for no_agent, agent in enumerate(self.agents):
+            filename = os.path.join(result_dir, f"rpm_agent{no_agent}.npz")
+            agent.save_replay_memory(filename)
+
+    def save_models_and_rpm(self):
+        self.save_models()

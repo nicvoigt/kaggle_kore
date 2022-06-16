@@ -57,6 +57,15 @@ class ReplayBuffer(object):
 
         return states, actions, rewards, states_, terminal
 
+    def save_to_local(self, filename):
+        np.savez(
+            filename,
+            self.state_memory,
+            self.new_state_memory,
+            self.action_memory,
+            self.reward_memory,
+            self.terminal_memory)
+
 
 tc = [0, 2, 7, 17, 34, 60, 97, 147, 212, 294]
 sm = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]

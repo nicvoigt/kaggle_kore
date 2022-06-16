@@ -27,10 +27,10 @@ class Agent:
         self.state_size = state_size
         self.model = self.create_model2(action_size, lr)
         self.target_model = self.model
-        self.memory = ReplayBuffer(500_000, [state_size])
+        self.memory = ReplayBuffer(10_000, [state_size])
         self.batch_size = batch_size
         self.gamma = gamma
-        self.lr = lr
+        self.lr = lr 
 
     def choose_action(self, state_input):
         state_input = np.array(state_input)
@@ -67,3 +67,6 @@ class Agent:
         model.add(layers.Dense(action_size))
         model.compile(optimizer=Adam(lr=lr), loss='mean_squared_error')
         return model
+
+    def save_replay_memory(self):
+        self.memory.save_to_local()
