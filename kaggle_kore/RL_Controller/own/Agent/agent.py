@@ -30,7 +30,7 @@ class Agent:
         self.memory = ReplayBuffer(10_000, [state_size])
         self.batch_size = batch_size
         self.gamma = gamma
-        self.lr = lr 
+        self.lr = lr
 
     def choose_action(self, state_input):
         state_input = np.array(state_input)

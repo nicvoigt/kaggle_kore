@@ -244,10 +244,15 @@ class Multi_Agent_Controller:
         # TODO hier nochmal genau reinschauen, ist njoch nciht richtig
         # implementiert
         for no_agent, agent in enumerate(self.agents):
-            agent.model.save(os.path.join(result_dir, f"agent_no{no_agent}.h5"))
-            agent.target_model.save(os.path.join(result_dir, f"agent_no{no_agent}_target.h5"))
+            agent.model.save(
+                os.path.join(
+                    result_dir,
+                    f"agent_no{no_agent}.h5"))
+            agent.target_model.save(
+                os.path.join(
+                    result_dir,
+                    f"agent_no{no_agent}_target.h5"))
             print('... saving models ...')
-
 
     def save_replay_memory(self):
         for no_agent, agent in enumerate(self.agents):
