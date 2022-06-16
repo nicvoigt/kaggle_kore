@@ -43,7 +43,6 @@ class Agent:
             return
         states, actions, rewards, states_, done = self.memory.sample_buffer(
             self.batch_size)
-        print(rewards)
 
         q_eval = self.model.predict(states)
 

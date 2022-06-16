@@ -189,7 +189,6 @@ class Multi_Agent_Controller:
         new_shipyard_no = self.rl_state[idx][self.rl_names.index(
             "num_shipyards")] - self.last_rl_state[idx][self.rl_names.index("num_shipyards")]
         if new_shipyard_no > 0:
-            print("new abse was build")
             reward += 500
 
         # reward if game ends:
@@ -232,7 +231,6 @@ class Multi_Agent_Controller:
 
         elif action_raw == 3 and opp_shipyards != 0:
             action = helper_functions.attack_opponent_base(board, idx=idx)
-            # print("theoretically attacked opponent base")
             if me.shipyards[idx].ship_count >= 50:
                 print("vermutlich auch angegriffen")
         else:
@@ -252,7 +250,6 @@ class Multi_Agent_Controller:
                 os.path.join(
                     result_dir,
                     f"agent_no{no_agent}_target.h5"))
-            print('... saving models ...')
 
     def save_replay_memory(self):
         for no_agent, agent in enumerate(self.agents):
