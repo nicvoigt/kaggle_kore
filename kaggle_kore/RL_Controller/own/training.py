@@ -42,3 +42,5 @@ for turn in range(10):
 
 rlc.save_models_and_rpm()
 print(rlc.agents[0].memory.sample_by_index((0, 50)))
+rlc.save_models()
+rlc.save_replay_memory()
