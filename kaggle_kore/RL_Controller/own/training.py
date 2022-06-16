@@ -25,15 +25,15 @@ for turn in range(1000):
     for idx, shipyard in enumerate(me.shipyards):
         # TODO beim attackieren des Gegners ist es tatsächlich relevant,
         # welches sy bzw welcher Agent gerade gesteuert wird
-        rlc.get_states(obs, config, me, idx)
+        rlc.get_states(obs, config)
 
         # state mappen und auch transition in rl-agent speichern
-        rl_state = rlc.make_transition(obs, config, idx)
+        rl_state = rlc.make_transition(idx)
         # if env is done
         # TODO get the other case when, there is only one shipyard left
         if rl_state[-1] == 1:
             env.reset(2)
-        shipyard.next_action = rlc.choose_action(rl_state, obs, config, idx)
+        shipyard.next_action = rlc.choose_action(rl_state, idx)
 
     obs = env.step([me.next_actions, me.next_actions])
     obs = obs[0]["observation"]

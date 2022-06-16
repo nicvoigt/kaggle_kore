@@ -128,7 +128,16 @@ def create_flightplan_to_opponent_bases(own_pos, opp_poss):
 
     dirx = choice(["W", "E"])
     diry = choice(["N", "S"])
-    fp = f"{dirx}{dx}{diry}"
+
+    # wenn die bases auf der gleichen x-koordinate sind (x-ox)==0
+    if x - ox == 0:
+        fp = f"{dirx}"
+
+    elif y - oy == 0:
+        fp = f"{diry}"
+    
+    else:
+        fp = f"{dirx}{dx}{diry}"
     return ShipyardAction.launch_fleet_with_flight_plan(50, fp)
 
 

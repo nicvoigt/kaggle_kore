@@ -19,18 +19,23 @@ def agent(obs, config):
     board, me, turn, spawn_cost, kore_left, max_spawn, opp_kore, opp_shipyards, num_shipyards = unbundle_stuff(
         obs, config)
 
+    
+    
+
     for idx, shipyard in enumerate(me.shipyards):
         # TODO beim attackieren des Gegners ist es tatsächlich relevant,
         # welches sy bzw welcher Agent gerade gesteuert wird
-        rlc.get_states(obs, config, me, idx)
 
+        rlc.get_states(obs, config)
+        
         # state mappen und auch transition in rl-agent speichern
-        rl_state = rlc.make_transition(obs, config, idx)
+        rl_state = rlc.make_transition(idx)
+
         # if env is done
         # TODO get the other case when, there is only one shipyard left
         if rl_state[-1] == 1:
             break
             # env.reset(2)
-        shipyard.next_action = rlc.choose_action(rl_state, obs, config, idx)
+        shipyard.next_action = rlc.choose_action(rl_state, idx)
 
     return me.next_actions
