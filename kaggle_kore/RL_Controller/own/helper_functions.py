@@ -60,7 +60,13 @@ class ReplayBuffer(object):
 
     def save_to_local(self):
         outfile = TemporaryFile()
-        np.savez("testoutput.npz", self.state_memory, self.new_state_memory, self.action_memory, self.reward_memory, self.terminal_memory )
+        np.savez(
+            "testoutput.npz",
+            self.state_memory,
+            self.new_state_memory,
+            self.action_memory,
+            self.reward_memory,
+            self.terminal_memory)
 
 
 tc = [0, 2, 7, 17, 34, 60, 97, 147, 212, 294]
