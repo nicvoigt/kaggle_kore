@@ -140,7 +140,7 @@ def create_flightplan_to_opponent_bases(own_pos, opp_poss):
 
     elif y - oy == 0:
         fp = f"{diry}"
-    
+
     else:
         fp = f"{dirx}{dx}{diry}"
     return ShipyardAction.launch_fleet_with_flight_plan(50, fp)

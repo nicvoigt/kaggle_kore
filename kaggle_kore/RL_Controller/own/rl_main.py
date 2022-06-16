@@ -19,15 +19,12 @@ def agent(obs, config):
     board, me, turn, spawn_cost, kore_left, max_spawn, opp_kore, opp_shipyards, num_shipyards = unbundle_stuff(
         obs, config)
 
-    
-    
-
     for idx, shipyard in enumerate(me.shipyards):
         # TODO beim attackieren des Gegners ist es tatsächlich relevant,
         # welches sy bzw welcher Agent gerade gesteuert wird
 
         rlc.get_states(obs, config)
-        
+
         # state mappen und auch transition in rl-agent speichern
         rl_state = rlc.make_transition(idx)
 
