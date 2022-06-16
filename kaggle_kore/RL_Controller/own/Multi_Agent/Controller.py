@@ -40,20 +40,18 @@ class Multi_Agent_Controller:
         self.me = None
         self.num_shipyards = 1
 
-
-
     def check_for_new_shipyard_and_create_agent(self, num_shipyards, turn):
         new_shipyards = num_shipyards - self.num_shipyards
         if (turn > 0) and (new_shipyards > 0) and (self.num_shipyards > 0):
             for sy in range(new_shipyards):
                 self.create_new_agent(self.num_shipyards + sy - 1)
-        
+
         self.num_shipyards = num_shipyards
 
     def write_env_variable_into_class(self, obs, config):
         self.obs = obs
         self.config = config
-    
+
     def check_if_game_is_over(self, num_shipyards):
 
         if num_shipyards == 0:
@@ -64,7 +62,7 @@ class Multi_Agent_Controller:
     def get_states(self, obs, config):
         board, me, turn, spawn_cost, kore_left, max_spawn, kore_opp, opp_shipyards, num_shipyards = helper_functions.unbundle_stuff(
             obs, config)
-        #if  self.check_if_game_is_over(self, num_shipyards) == True:
+        # if  self.check_if_game_is_over(self, num_shipyards) == True:
         #    return
 
         self.check_for_new_shipyard_and_create_agent(num_shipyards, turn)
@@ -79,16 +77,23 @@ class Multi_Agent_Controller:
         # also abfragen, ob schon die neue base angesprochen wird
 
         # TODO hier ist der fehler!!!!!!!
-        
+
         self.agents.append(Agent(self.state_size, action_size=4, lr=0.005))
 
         # tryout beim höchsten rl_state noch einen hinzufügen
         no_rl_states = max(self.rl_state.keys())
-        next_agent_idx = no_rl_states +1
+        next_agent_idx = no_rl_states + 1
         self.rl_state[next_agent_idx] = self.rl_state[agent_idx]
         self.last_rl_action[next_agent_idx] = self.last_rl_action[agent_idx]
 
-    def store_transition(self, state, action, reward, next_state, done, agent_idx):
+    def store_transition(
+            self,
+            state,
+            action,
+            reward,
+            next_state,
+            done,
+            agent_idx):
         self.agents[agent_idx].store_transition(
             state, action, reward, next_state, done)
 
@@ -108,14 +113,15 @@ class Multi_Agent_Controller:
         board, me, turn, spawn_cost, kore_left, max_spawn, kore_opp, opp_shipyards, num_shipyards = helper_functions.unbundle_stuff(
             self.obs, self.config)
 
-
         reward = self.calc_reward(idx)
         if turn > 0:
             self.last_rl_state[idx] = self.rl_state[idx]
         rl_state = self.map_input_to_rl_state(self.obs, self.config, idx)
 
         if len(
-            self.last_rl_action) != 0 and len(self.last_rl_state) == len(self.rl_state):
+            self.last_rl_action) != 0 and len(
+            self.last_rl_state) == len(
+                self.rl_state):
             self.store_transition(self.last_rl_state[idx],
                                   self.last_rl_action[idx],
                                   reward,
@@ -219,13 +225,13 @@ class Multi_Agent_Controller:
             action = helper_functions.send_ships_to_create_new_base(
                 shipyard=me.shipyards[idx])
 
-        elif action_raw == 3 and opp_shipyards !=0:
+        elif action_raw == 3 and opp_shipyards != 0:
             action = helper_functions.attack_opponent_base(board, idx=idx)
             # print("theoretically attacked opponent base")
             if me.shipyards[idx].ship_count >= 50:
                 print("vermutlich auch angegriffen")
         else:
-            # falls die action 3 nicht geht, versuche zu spaw 
+            # falls die action 3 nicht geht, versuche zu spaw
             action = ShipyardAction.spawn_ships(max_spawn)
         return action
 
