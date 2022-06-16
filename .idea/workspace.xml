@@ -2,39 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1ee33e3a-4985-48f1-a9de-7b0f92c987a5" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/kaggle_kore/RL_Controller/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kaggle_kore/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kaggle_kore/heuristic/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/kaggle_kore.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RL_Controller/env.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RL_Controller/gym/env.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RL_Controller/gym/gym_main.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RL_Controller/gym/own_env.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RL_Controller/own/agent.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RL_Controller/own/helper_functions.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RL_Controller/own/rl_main.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RL_Controller/own/training.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/access_token.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/exploring.ipynb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/exploring.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/heuristic/build_ships_and_launch.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/heuristic/build_ships_and_launch_opt_versuch.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/heuristic/build_ships_and_launch_variable_directions.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/heuristic/build_ships_and_launch_w_flightplan.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/heuristic/build_ships_and_launch_w_flightplan_straight.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/heuristic/building_ships.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/heuristic/do_nothing.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/heuristic/noni.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/kaggle_kore.egg-info/PKG-INFO" beforeDir="false" afterPath="$PROJECT_DIR$/kaggle_kore.egg-info/PKG-INFO" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kaggle_kore.egg-info/SOURCES.txt" beforeDir="false" afterPath="$PROJECT_DIR$/kaggle_kore.egg-info/SOURCES.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kaggle_kore.egg-info/top_level.txt" beforeDir="false" afterPath="$PROJECT_DIR$/kaggle_kore.egg-info/top_level.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rules/spawn_rules.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kaggle_kore/RL_Controller/own/Multi_Agent/Controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/kaggle_kore/RL_Controller/own/Multi_Agent/Controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kaggle_kore/RL_Controller/own/rl_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/kaggle_kore/RL_Controller/own/rl_main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kaggle_kore/exploring.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/kaggle_kore/exploring.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kaggle_kore/exploring.py" beforeDir="false" afterPath="$PROJECT_DIR$/kaggle_kore/exploring.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,6 +22,10 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/kaggle_kore/heuristic/__init__.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/kaggle_kore/RL_Controller/__init__.py" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -63,6 +38,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Mitbring_APP" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
